@@ -13,7 +13,7 @@ export default function ForgotPassword() {
     setError(null);
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "https://steady-engine-web.vercel.app/reset-password",
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/reset-password`,
     });
 
     if (error) {
