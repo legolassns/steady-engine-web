@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 export default function Login() {
@@ -8,7 +8,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("reset") === "success") {
+      setMessage("Password updated. You can now sign in.");
+    }
+  }, [searchParams]);
 
   async function handleLogin() {
     setLoading(true);
@@ -107,6 +115,13 @@ export default function Login() {
             />
           </div>
 
+          {/* Success message (e.g. after password reset) */}
+          {message && (
+            <div style={{ fontSize: "0.68rem", color: "#4ade80", marginBottom: "1rem", padding: "0.75rem 1rem", border: "1px solid rgba(74,222,128,0.2)", background: "rgba(74,222,128,0.05)" }}>
+              {message}
+            </div>
+          )}
+
           {/* Error */}
           {error && (
             <div style={{ fontSize: "0.68rem", color: "#f87171", marginBottom: "1rem", padding: "0.75rem 1rem", border: "1px solid rgba(248,113,113,0.2)", background: "rgba(248,113,113,0.05)" }}>
@@ -133,8 +148,7 @@ export default function Login() {
 
           {/* Footer */}
           <p style={{ marginTop: "1.5rem", fontSize: "0.6rem", color: "var(--text-dim)", letterSpacing: "0.05em", lineHeight: 1.8, textAlign: "center" }}>
-            Forgot your password?{" "}
-            <a href="/login" style={{ color: "var(--text-dim)", textDecoration: "underline" }}>Try signing in again</a>
+            <a href="/forgot-password" style={{ color: "var(--text-dim)", textDecoration: "underline" }}>Forgot your password?</a>
             {" "}or contact support.
           </p>
 
