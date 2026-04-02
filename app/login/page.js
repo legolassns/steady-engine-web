@@ -133,7 +133,9 @@ export default function Login() {
 
           {/* Footer */}
           <p style={{ marginTop: "1.5rem", fontSize: "0.6rem", color: "var(--text-dim)", letterSpacing: "0.05em", lineHeight: 1.8, textAlign: "center" }}>
-            Forgot your password? Contact support.
+            Forgot your password?{" "}
+            <a href="/login" style={{ color: "var(--text-dim)", textDecoration: "underline" }}>Try signing in again</a>
+            {" "}or contact support.
           </p>
 
         </div>

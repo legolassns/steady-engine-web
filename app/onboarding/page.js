@@ -80,9 +80,9 @@ export default function Onboarding() {
 
       {/* NAV */}
       <nav style={{ padding: "1.25rem 2rem", borderBottom: "1px solid var(--border-dim)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", letterSpacing: "0.12em", color: "var(--gold)", textTransform: "uppercase" }}>
+        <a href="/" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", letterSpacing: "0.12em", color: "var(--gold)", textTransform: "uppercase", textDecoration: "none" }}>
           Steady Engine
-        </span>
+        </a>
         <div style={{ display: "flex", gap: "0.75rem" }}>
           {[1, 2, 3].map((s) => (
             <div key={s} style={{ width: 24, height: 2, background: s <= step ? "var(--gold)" : "var(--border-dim)", transition: "background 0.3s" }} />

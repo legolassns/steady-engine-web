@@ -17,9 +17,13 @@ export default function Register() {
     const { error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
-      setError(error.message);
+      if (error.message.toLowerCase().includes("already registered")) {
+        setError("already_exists");
+      } else {
+        setError(error.message);
+      }
     } else {
-      setMessage("Check your email to confirm your account.");
+      setMessage("If this is a new account, check your email to confirm. If you already have an account, sign in instead.");
     }
     setLoading(false);
   }
@@ -108,12 +112,17 @@ export default function Register() {
           {/* Messages */}
           {error && (
             <div style={{ fontSize: "0.68rem", color: "#f87171", marginBottom: "1rem", padding: "0.75rem 1rem", border: "1px solid rgba(248,113,113,0.2)", background: "rgba(248,113,113,0.05)" }}>
-              {error}
+              {error === "already_exists" ? (
+                <>Account already exists. Please <a href="/login" style={{ color: "#f87171", textDecoration: "underline" }}>sign in</a>.</>
+              ) : error}
             </div>
           )}
           {message && (
             <div style={{ fontSize: "0.68rem", color: "#4ade80", marginBottom: "1rem", padding: "0.75rem 1rem", border: "1px solid rgba(74,222,128,0.2)", background: "rgba(74,222,128,0.05)" }}>
               {message}
+              <div style={{ marginTop: "0.6rem" }}>
+                <a href="/login" style={{ color: "#4ade80", textDecoration: "underline" }}>Sign in →</a>
+              </div>
             </div>
           )}
 

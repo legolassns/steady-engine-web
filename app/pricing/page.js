@@ -5,6 +5,7 @@ import { supabase } from "../../lib/supabase";
 export default function Pricing() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [checkoutError, setCheckoutError] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -19,6 +20,7 @@ export default function Pricing() {
     }
 
     setLoading(plan);
+    setCheckoutError(null);
 
     try {
       const response = await fetch("/api/checkout", {
@@ -32,11 +34,11 @@ export default function Pricing() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert("Error: " + (data.error || "Unknown error"));
+        setCheckoutError(data.error || "Something went wrong. Please try again.");
         setLoading(null);
       }
     } catch (err) {
-      alert("Error: " + err.message);
+      setCheckoutError("Could not connect to checkout. Please try again.");
       setLoading(null);
     }
   }
@@ -139,6 +141,11 @@ export default function Pricing() {
 
       {/* PLANS */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 2rem 6rem" }}>
+        {checkoutError && (
+          <div style={{ fontSize: "0.68rem", color: "#f87171", marginBottom: "1.5rem", padding: "0.75rem 1rem", border: "1px solid rgba(248,113,113,0.2)", background: "rgba(248,113,113,0.05)" }}>
+            {checkoutError}
+          </div>
+        )}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 1, background: "var(--border-dim)" }}>
           {plans.map((plan) => (
             <div key={plan.key} style={{

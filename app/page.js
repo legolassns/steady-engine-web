@@ -69,15 +69,15 @@ export default function Home() {
         backdropFilter: "blur(12px)",
         transition: "background 0.3s",
       }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", letterSpacing: "0.12em", color: "var(--gold)", textTransform: "uppercase" }}>
+        <a href="/" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", letterSpacing: "0.12em", color: "var(--gold)", textTransform: "uppercase" }}>
           Steady Engine
-        </span>
+        </a>
         <div style={{ display: "flex", gap: "2rem" }}>
-          {[["#how", "How it works"], ["#performance", "Performance"], ["#pricing", "Pricing"]].map(([href, label]) => (
+          {[["#how", "How it works"], ["#performance", "Performance"], ["#pricing", "Pricing"], ["/manual", "Manual"]].map(([href, label]) => (
             <a key={href} href={href} className="nav-link">{label}</a>
           ))}
         </div>
-        <a href="#pricing" style={{ fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.55rem 1.4rem", border: "1px solid var(--gold-dim)", color: "var(--gold-light)" }}>
+        <a href="/register" style={{ fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.55rem 1.4rem", border: "1px solid var(--gold-dim)", color: "var(--gold-light)" }}>
           Start free
         </a>
       </nav>
@@ -101,10 +101,10 @@ export default function Home() {
         </p>
 
         <div className="a4" style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-          <a href="#pricing" className="btn-gold" style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", padding: "1rem 2.5rem" }}>
+          <a href="/register" className="btn-gold" style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", padding: "1rem 2.5rem" }}>
             30 days free
           </a>
-          <a href="#how" style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", padding: "1rem 2rem", border: "1px solid var(--border-dim)", color: "var(--text-muted)" }}>
+          <a href="/manual" style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", padding: "1rem 2rem", border: "1px solid var(--border-dim)", color: "var(--text-muted)" }}>
             How it works →
           </a>
         </div>
@@ -115,7 +115,7 @@ export default function Home() {
 
       {/* STATUS BAR */}
       <div style={{ padding: "1rem 2rem", borderTop: "1px solid var(--border-dim)", borderBottom: "1px solid var(--border-dim)", background: "var(--bg2)", display: "flex", gap: "2.5rem", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
-        {[["System","ACTIVE",true],["Instrument","XAUUSD",false],["Bias","SHORT",false],["Window","02:00 — 12:15 UTC",false],["Trades today","0 / 3",false],["Band","STABLE",false]].map(([label, value, dot]) => (
+        {[["System","ACTIVE",true],["Instrument","XAUUSD",false],["Bias","SHORT",false],["Window","00:00 — 11:15 UTC",false],["Trades today","0 / 3",false],["Band","STABLE",false]].map(([label, value, dot]) => (
           <div key={label} style={{ display: "flex", alignItems: "center", gap: "0.75rem", fontSize: "0.63rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
             {dot && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--gold)", animation: "pulse 2s ease-in-out infinite", display: "inline-block" }} />}
             <span style={{ color: "var(--text-muted)" }}>{label}</span>
@@ -211,10 +211,10 @@ export default function Home() {
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 1, background: "var(--border-dim)" }}>
           {[
-            { name:"Trial", price:"€0", period:"/30 days", note:"No credit card required", featured:false, features:["Real signals on live market","Dashboard access","Full manual"], cta:"Start free" },
-            { name:"Monthly", price:"€49", period:"/month", note:"Cancel anytime", featured:false, features:["Real-time Telegram signals","Dashboard + signal history","Session band & risk hint"], cta:"Subscribe" },
-            { name:"Annual", price:"€397", period:"/year", note:"Equivalent to ~8 months — save 33%", featured:false, features:["Everything in Monthly","Member badge in dashboard","Priority access to new features"], cta:"Save 33%" },
-            { name:"Lifetime", price:"€497", period:" one-time", note:"Founder offer — first 100 users only", featured:true, features:["Permanent access forever","Founder badge in dashboard","Early access to every feature","Priority support"], cta:"Become a Founder" },
+            { name:"Trial", price:"€0", period:"/30 days", note:"No credit card required", featured:false, features:["Real signals on live market","Dashboard access","Full manual"], cta:"Start free", href:"/register" },
+            { name:"Monthly", price:"€49", period:"/month", note:"Cancel anytime", featured:false, features:["Real-time Telegram signals","Dashboard + signal history","Session band & risk hint"], cta:"Subscribe", href:"/pricing" },
+            { name:"Annual", price:"€397", period:"/year", note:"Equivalent to ~8 months — save 33%", featured:false, features:["Everything in Monthly","Member badge in dashboard","Priority access to new features"], cta:"Save 33%", href:"/pricing" },
+            { name:"Lifetime", price:"€497", period:" one-time", note:"Founder offer — first 100 users only", featured:true, features:["Permanent access forever","Founder badge in dashboard","Early access to every feature","Priority support"], cta:"Become a Founder", href:"/pricing" },
           ].map((plan) => (
             <div key={plan.name} style={{ background: plan.featured ? "var(--bg3)" : "var(--bg)", padding: "2.5rem 2rem", borderTop: plan.featured ? "2px solid var(--gold)" : "2px solid transparent", position: "relative" }}>
               {plan.featured && (
@@ -234,7 +234,7 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <a href="#" className="plan-cta" style={{ background: plan.featured ? "var(--gold)" : "transparent", color: plan.featured ? "var(--bg)" : "var(--gold)", border: "1px solid var(--gold-dim)" }}>
+              <a href={plan.href} className="plan-cta" style={{ background: plan.featured ? "var(--gold)" : "transparent", color: plan.featured ? "var(--bg)" : "var(--gold)", border: "1px solid var(--gold-dim)" }}>
                 {plan.cta}
               </a>
             </div>

@@ -56,9 +56,9 @@ export default function Dashboard() {
 
       {/* NAV */}
       <nav style={{ padding: "1.25rem 2rem", borderBottom: "1px solid var(--border-dim)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", letterSpacing: "0.12em", color: "var(--gold)", textTransform: "uppercase" }}>
+        <a href="/" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", letterSpacing: "0.12em", color: "var(--gold)", textTransform: "uppercase", textDecoration: "none" }}>
           Steady Engine
-        </span>
+        </a>
         <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
           <span style={{ fontSize: "0.62rem", letterSpacing: "0.1em", color: "var(--text-dim)" }}>{user?.email}</span>
           <button
