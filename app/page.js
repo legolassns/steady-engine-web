@@ -3,12 +3,26 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Close menu when resizing to desktop
+  useEffect(() => {
+    if (!isMobile) setMenuOpen(false);
+  }, [isMobile]);
 
   return (
     <>
@@ -72,15 +86,92 @@ export default function Home() {
         <a href="/" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", letterSpacing: "0.12em", color: "var(--gold)", textTransform: "uppercase" }}>
           Steady Engine
         </a>
-        <div style={{ display: "flex", gap: "2rem" }}>
+
+        {/* Desktop nav links */}
+        <div style={{ display: isMobile ? "none" : "flex", gap: "2rem" }}>
           {[["#how", "How it works"], ["#performance", "Performance"], ["#pricing", "Pricing"], ["/manual", "Manual"]].map(([href, label]) => (
             <a key={href} href={href} className="nav-link">{label}</a>
           ))}
         </div>
-        <a href="/register" style={{ fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.55rem 1.4rem", border: "1px solid var(--gold-dim)", color: "var(--gold-light)" }}>
-          Start free
-        </a>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          {/* Start free — always visible */}
+          <a href="/register" style={{ fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.55rem 1.4rem", border: "1px solid var(--gold-dim)", color: "var(--gold-light)" }}>
+            Start free
+          </a>
+
+          {/* Hamburger button — mobile only */}
+          {isMobile && (
+            <button
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              style={{
+                background: "none", border: "none", cursor: "pointer",
+                padding: "0.25rem", display: "flex", flexDirection: "column",
+                gap: "5px", alignItems: "center", justifyContent: "center",
+              }}
+            >
+              {menuOpen ? (
+                // X icon
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--gold-light)" strokeWidth="1.5" strokeLinecap="round">
+                  <line x1="4" y1="4" x2="16" y2="16" />
+                  <line x1="16" y1="4" x2="4" y2="16" />
+                </svg>
+              ) : (
+                // Hamburger icon
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--gold-light)" strokeWidth="1.5" strokeLinecap="round">
+                  <line x1="3" y1="6" x2="17" y2="6" />
+                  <line x1="3" y1="10" x2="17" y2="10" />
+                  <line x1="3" y1="14" x2="17" y2="14" />
+                </svg>
+              )}
+            </button>
+          )}
+        </div>
       </nav>
+
+      {/* Mobile full-screen menu */}
+      {menuOpen && isMobile && (
+        <div style={{
+          position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          zIndex: 99,
+          background: "rgba(10,10,8,0.98)",
+          backdropFilter: "blur(16px)",
+          display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center",
+          gap: "0.5rem",
+        }}>
+          {[["#how", "How it works"], ["#performance", "Performance"], ["#pricing", "Pricing"], ["/manual", "Manual"]].map(([href, label]) => (
+            <a
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase",
+                color: "var(--text-muted)", padding: "1rem 2rem",
+                borderBottom: "1px solid var(--border-dim)", width: "100%",
+                textAlign: "center", transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = "var(--gold-light)"}
+              onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-muted)"}
+            >
+              {label}
+            </a>
+          ))}
+          <a
+            href="/register"
+            style={{
+              marginTop: "2rem",
+              fontFamily: "'DM Mono', monospace",
+              fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase",
+              padding: "1rem 3rem", background: "var(--gold)", color: "var(--bg)",
+            }}
+          >
+            Start free
+          </a>
+        </div>
+      )}
 
       {/* HERO */}
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "8rem 2rem 6rem", position: "relative", overflow: "hidden" }}>
