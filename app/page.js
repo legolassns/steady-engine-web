@@ -89,7 +89,7 @@ export default function Home() {
 
         {/* Desktop nav links */}
         <div style={{ display: isMobile ? "none" : "flex", gap: "2rem" }}>
-          {[["#how", "How it works"], ["#performance", "Performance"], ["#pricing", "Pricing"], ["/manual", "Manual"]].map(([href, label]) => (
+          {[["#how", "How it works"], ["/performance", "Performance"], ["#pricing", "Pricing"], ["/manual", "Manual"]].map(([href, label]) => (
             <a key={href} href={href} className="nav-link">{label}</a>
           ))}
         </div>
@@ -141,7 +141,7 @@ export default function Home() {
           alignItems: "center", justifyContent: "center",
           gap: "0.5rem",
         }}>
-          {[["#how", "How it works"], ["#performance", "Performance"], ["#pricing", "Pricing"], ["/manual", "Manual"]].map(([href, label]) => (
+          {[["#how", "How it works"], ["/performance", "Performance"], ["#pricing", "Pricing"], ["/manual", "Manual"]].map(([href, label]) => (
             <a
               key={href}
               href={href}
