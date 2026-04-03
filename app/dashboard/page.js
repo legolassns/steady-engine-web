@@ -6,6 +6,7 @@ import { supabase } from "../../lib/supabase";
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [todaySession, setTodaySession] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -18,6 +19,26 @@ export default function Dashboard() {
       }
     });
   }, [router]);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    supabase
+      .from("daily_sessions")
+      .select("*")
+      .eq("date", today)
+      .single()
+      .then(({ data }) => {
+        if (data) setTodaySession(data);
+      });
+  }, []);
+
+  const tradesTaken = todaySession ? todaySession.trades_taken : "—";
+  const cards = [
+    ["System", "ACTIVE", true],
+    ["Bias", "—", false],
+    [`Trades today`, `${tradesTaken} / 3`, false],
+    ["Band", "—", false],
+  ];
 
   if (loading) return (
     <div style={{ minHeight: "100vh", background: "#0A0A08", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -85,12 +106,7 @@ export default function Dashboard() {
 
         {/* Status cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 1, background: "var(--border-dim)", marginBottom: "3rem" }}>
-          {[
-            ["System", "ACTIVE", true],
-            ["Bias", "SHORT", false],
-            ["Trades today", "0 / 3", false],
-            ["Band", "STABLE", false],
-          ].map(([label, value, dot]) => (
+          {cards.map(([label, value, dot]) => (
             <div key={label} style={{ background: "var(--bg)", padding: "1.75rem" }}>
               <div style={{ fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 {dot && <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--gold)", animation: "pulse 2s ease-in-out infinite", display: "inline-block" }} />}
