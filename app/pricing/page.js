@@ -23,9 +23,14 @@ export default function Pricing() {
     setCheckoutError(null);
 
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+
       const response = await fetch("/api/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${session?.access_token}`,
+        },
         body: JSON.stringify({ plan, userId: user.id, email: user.email }),
       });
 
