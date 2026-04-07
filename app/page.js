@@ -284,7 +284,7 @@ export default function Home() {
           <em style={{ fontStyle: "italic", color: "var(--gold-light)" }}>Transparent</em> performance.<br />Drawdown included.
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 1, background: "var(--border-dim)" }}>
-          {[["1.5×","Minimum RR","Every trade requires RR ≥ 1.5 by rule"],["3","Max trades/day","Hard limit, not discretionary"],["02:00","Session open UTC","Operational close at 12:30"],["−2R","Daily kill switch","Auto-stop beyond −2R per day"]].map(([num,label,desc]) => (
+          {[["1.5×","Minimum RR","Every trade requires RR ≥ 1.5 by rule"],["3","Max trades/day","Hard limit, not discretionary"],["00:00","Session open UTC","Operational close at 11:30"],["−2R","Daily kill switch","Auto-stop beyond −2R per day"]].map(([num,label,desc]) => (
             <div key={label} className="metric-card">
               <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.8rem", fontWeight: 300, color: "var(--gold-light)", lineHeight: 1, marginBottom: "0.5rem" }}>{num}</div>
               <div style={{ fontSize: "0.6rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--text-muted)" }}>{label}</div>

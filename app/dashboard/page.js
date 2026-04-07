@@ -127,7 +127,7 @@ export default function Dashboard() {
               No signals yet today.
             </div>
             <p style={{ fontSize: "0.68rem", color: "var(--text-dim)", lineHeight: 1.9, maxWidth: 400, margin: "0 auto" }}>
-              The system operates between 02:00 and 12:15 UTC. Signals appear here and on Telegram when market conditions are favourable.
+              The system operates between 00:00 and 11:15 UTC. Signals appear here and on Telegram when market conditions are favourable.
             </p>
           </div>
         </div>
