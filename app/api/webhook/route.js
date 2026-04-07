@@ -77,6 +77,22 @@ export async function POST(request) {
         break;
       }
 
+      case "invoice.payment_succeeded": {
+        const invoice = event.data.object;
+        const customerId = invoice.customer;
+        const periodEnd = invoice.lines?.data?.[0]?.period?.end;
+        if (!customerId || !periodEnd) break;
+        const endsAt = new Date(periodEnd * 1000).toISOString();
+        await supabase
+          .from("users")
+          .update({
+            is_active: true,
+            subscription_ends_at: endsAt,
+          })
+          .eq("stripe_customer_id", customerId);
+        break;
+      }
+
       default:
         console.log(`Webhook: unhandled event type ${event.type}`);
     }
