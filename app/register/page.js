@@ -14,7 +14,7 @@ export default function Register() {
     setError(null);
     setMessage(null);
 
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       if (error.message.toLowerCase().includes("already registered")) {
@@ -23,6 +23,16 @@ export default function Register() {
         setError(error.message);
       }
     } else {
+      // Create user record with trial
+      const trialEndsAt = new Date();
+      trialEndsAt.setDate(trialEndsAt.getDate() + 30);
+      await supabase.from("users").upsert({
+        id: data.user.id,
+        email: email,
+        plan: "trial",
+        is_active: true,
+        subscription_ends_at: trialEndsAt.toISOString(),
+      });
       setMessage("If this is a new account, check your email to confirm. If you already have an account, sign in instead.");
     }
     setLoading(false);
